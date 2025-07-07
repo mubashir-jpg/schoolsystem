@@ -1,109 +1,105 @@
-<!doctype html>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Dashboard | MyApp</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>School Dashboard</title>
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #f1f1f1;
-    }
-
-    .header-image {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-      border-bottom: 4px solid #0d6efd;
-    }
-
-    .dashboard-title {
-      text-align: center;
-      margin: 30px 0;
-      font-weight: bold;
-    }
-
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card-img-top {
-      height: 150px;
-      object-fit: cover;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-
-    footer {
-      background-color: #0d6efd;
-      color: white;
-      text-align: center;
-      padding: 20px 0;
-      margin-top: 40px;
-    }
-  </style>
 </head>
 <body>
 
-<!-- Header Banner Image -->
-<img src="https://images.unsplash.com/photo-1600721391091-03e2536edcd7?auto=format&fit=crop&w=1500&q=80" 
-     class="header-image" alt="School Banner">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MyApp</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<div class="container">
-  <h2 class="dashboard-title">School Dashboard</h2>
-  <div class="row g-4">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="newstudent.php">Student Fee</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="teacher.php">Teacher Detail</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="dashboard.php">Dashboard</a>
+        </li>
 
-    <!-- Students Card -->
+        <?php if (isset($_SESSION['user_email'])): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+          </li>
+        <?php else: ?>
+          <li class="nav-item">
+            <a class="nav-link" href="Registration.php">Signup</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.php">Login</a>
+          </li>
+        <?php endif; ?>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Dashboard Content -->
+<div class="container mt-5">
+  <h2 class="mb-4">Dashboard</h2>
+
+  <?php if (isset($_SESSION['user_email'])): ?>
+    <div class="alert alert-success">
+      Welcome, <strong><?php echo htmlspecialchars($_SESSION['user_email']); ?></strong>!
+    </div>
+  <?php else: ?>
+    <div class="alert alert-warning">
+      You are not logged in. Please <a href="login.php" class="alert-link">login</a> to continue.
+    </div>
+  <?php endif; ?>
+
+  <div class="row">
+    <!-- Sample dashboard cards -->
     <div class="col-md-4">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=90" class="card-img-top" alt="Students">
-        <div class="card-body text-center">
-          <h5 class="card-title">Students</h5>
-          <p class="card-text">Manage student data, admissions, and attendance.</p>
-          <a href="students.php" class="btn btn-primary">View Students</a>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Students</h5>
+          <p class="card-text">123</p>
         </div>
       </div>
     </div>
 
-    <!-- Teachers Card -->
     <div class="col-md-4">
-      <div class="card">
-        <img src="https://www.pexels.com/photo/twin-girls-doing-online-learning-9037275/" class="card-img-top" alt="Teachers">
-        <div class="card-body text-center">
-          <h5 class="card-title">Teachers</h5>
-          <p class="card-text">View and manage teacher profiles and subjects.</p>
-          <a href="teacher.php" class="btn btn-primary">View Teachers</a>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Teachers</h5>
+          <p class="card-text">15</p>
         </div>
       </div>
     </div>
 
-    <!-- Fees Card -->
     <div class="col-md-4">
-      <div class="card">
-        <img src="https://www.pexels.com/photo/adorable-feline-surrounded-by-colorful-letters-31723693/" class="card-img-top" alt="Fees">
-        <div class="card-body text-center">
-          <h5 class="card-title">Fees</h5>
-          <p class="card-text">Submit and track student fee records securely.</p>
-          <a href="studentfee.php" class="btn btn-primary">Manage Fees</a>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Pending Fees</h5>
+          <p class="card-text">5 students</p>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- Footer -->
-<footer>
-  <p>&copy; 2025 School Management System. All rights reserved.</p>
-</footer>
-
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

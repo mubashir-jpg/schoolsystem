@@ -3,7 +3,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-
+<?php
+include 'navbar.php'
+?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">MyApp</a>
@@ -15,7 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" href="studentfee.php">Student Fee</a>
+          <a class="nav-link" href="newstudent.php">Student Fee</a>
         </li>
 
         <li class="nav-item">
